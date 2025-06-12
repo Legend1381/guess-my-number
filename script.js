@@ -1,12 +1,5 @@
 "use strict";
 
-// --------------- Define Variables ---------------
-let secretNumber = generateRandom();
-console.log(secretNumber);
-let score = 20;
-let highScore = 0;
-const numberElemnt = document.querySelector(".number");
-
 // define functions
 const generateRandom = () => {
   return Math.trunc(Math.random() * 20) + 1;
@@ -18,22 +11,31 @@ const setScore = (newScore) => {
   document.querySelector(".score").textContent = newScore;
 };
 
+// define variables
+let secretNumber = generateRandom();
+console.log(secretNumber);
+let score = 20;
+let highScore = 0;
+const numberElement = document.querySelector(".number");
+const guessElement = document.querySelector(".guess");
+
 // --------------- Game Logic ---------------
 // check button action
 document.querySelector(".check").addEventListener("click", () => {
-  const guess = Number(document.querySelector(".guess").value);
-
+  const guess = Number(guessElement.value);
 
   if (!guess) {
     // if input is empty
     displayMessage("‼️ No Number!");
   } else if (guess === secretNumber) {
     // if guess is correct
-    displayMessage("🥳 Correct Number!");
+    displayMessage("🥳 Correct Number! Let's go again");
 
-    numberElemnt.textContent = secretNumber;
-    numberElemnt.style.width = "30rem";
-
+    numberElement.textContent = secretNumber;
+    numberElement.style.width = "30rem";
+    guessElement.disabled = true; 
+    
+    document.querySelector(".check").disabled = true;
     document.querySelector("body").style.backgroundColor = "#60b347";
 
     if (score > highScore) {
@@ -46,10 +48,13 @@ document.querySelector(".check").addEventListener("click", () => {
       displayMessage(guess > secretNumber ? "📈 Too High!" : "📉 Too Low!");
       score--;
       setScore(score);
+      console.log(score);
     } else {
-        // game over
-      displayMessage("😭 You lost!");
+      // game over
+      displayMessage("😭 You lost!... Try again");
       setScore(0);
+      document.querySelector(".check").disabled = true;
+      guessElement.disabled = true; 
     }
   }
 });
@@ -60,12 +65,14 @@ document.querySelector(".again").addEventListener("click", () => {
   console.log("sec: ", secretNumber);
   score = 20;
 
-  numberElemnt.style.width = "15rem";
-  numberElemnt.textContent = "?";
+  numberElement.style.width = "15rem";
+  numberElement.textContent = "?";
+  guessElement.value = "";
+  guessElement.disabled = false;
 
   displayMessage("Start guessing...");
   setScore(score);
 
   document.querySelector("body").style.backgroundColor = "#222";
-  document.querySelector(".guess").value = "";
+  document.querySelector(".check").disabled = false;
 });
