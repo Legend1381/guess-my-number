@@ -13,7 +13,6 @@ const setScore = (newScore) => {
 
 // define variables
 let secretNumber = generateRandom();
-console.log(secretNumber);
 let score = 20;
 let highScore = 0;
 const numberElement = document.querySelector(".number");
@@ -34,7 +33,7 @@ document.querySelector(".check").addEventListener("click", () => {
     numberElement.textContent = secretNumber;
     numberElement.style.width = "30rem";
     guessElement.disabled = true; 
-    
+
     document.querySelector(".check").disabled = true;
     document.querySelector("body").style.backgroundColor = "#60b347";
 
@@ -62,7 +61,6 @@ document.querySelector(".check").addEventListener("click", () => {
 // Again button action (reset the game)
 document.querySelector(".again").addEventListener("click", () => {
   secretNumber = generateRandom();
-  console.log("sec: ", secretNumber);
   score = 20;
 
   numberElement.style.width = "15rem";
